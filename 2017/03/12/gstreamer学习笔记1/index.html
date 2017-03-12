@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hot,cute," />
+  <meta name="keywords" content="gstreamer," />
 
 
 
@@ -87,24 +87,22 @@
 
 
 
-<meta name="description" content="我是远宝宝大家好，我是远宝宝，初来乍到，请多关照！
-
-12345#include&amp;lt;stdio.h&amp;gt;void main()  &amp;#123;    printf(&quot;great thank to laohe!\n&quot;);  &amp;#125;">
+<meta name="description" content="最近一直在做gstreamer相关的项目，遇到了也解决了一些问题，今天就在这里做一个分享。
+一、基本知识主要参考是官网的document，网址是：https://gstreamer.freedesktop.org/documentation/index.html
+gstreamer是一个常用的用C语言编写的多媒体框架。更基本的安装什么的在这里不多说。就说一下gstreamer常见的两种应用形式吧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="远宝宝开始写博客了">
-<meta property="og:url" content="http://yoursite.com/2017/02/27/远宝宝开始写博客了/index.html">
+<meta property="og:title" content="gstreamer学习笔记1">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/gstreamer学习笔记1/index.html">
 <meta property="og:site_name" content="远宝宝的blog">
-<meta property="og:description" content="我是远宝宝大家好，我是远宝宝，初来乍到，请多关照！
-
-12345#include&amp;lt;stdio.h&amp;gt;void main()  &amp;#123;    printf(&quot;great thank to laohe!\n&quot;);  &amp;#125;">
-<meta property="og:image" content="http://yoursite.com/image/cat.jpg">
-<meta property="og:updated_time" content="2017-02-27T13:12:35.791Z">
+<meta property="og:description" content="最近一直在做gstreamer相关的项目，遇到了也解决了一些问题，今天就在这里做一个分享。
+一、基本知识主要参考是官网的document，网址是：https://gstreamer.freedesktop.org/documentation/index.html
+gstreamer是一个常用的用C语言编写的多媒体框架。更基本的安装什么的在这里不多说。就说一下gstreamer常见的两种应用形式吧。">
+<meta property="og:updated_time" content="2017-03-12T12:10:42.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="远宝宝开始写博客了">
-<meta name="twitter:description" content="我是远宝宝大家好，我是远宝宝，初来乍到，请多关照！
-
-12345#include&amp;lt;stdio.h&amp;gt;void main()  &amp;#123;    printf(&quot;great thank to laohe!\n&quot;);  &amp;#125;">
-<meta name="twitter:image" content="http://yoursite.com/image/cat.jpg">
+<meta name="twitter:title" content="gstreamer学习笔记1">
+<meta name="twitter:description" content="最近一直在做gstreamer相关的项目，遇到了也解决了一些问题，今天就在这里做一个分享。
+一、基本知识主要参考是官网的document，网址是：https://gstreamer.freedesktop.org/documentation/index.html
+gstreamer是一个常用的用C语言编写的多媒体框架。更基本的安装什么的在这里不多说。就说一下gstreamer常见的两种应用形式吧。">
 
 
 
@@ -132,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/27/远宝宝开始写博客了/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/12/gstreamer学习笔记1/"/>
 
 
 
 
 
-  <title> 远宝宝开始写博客了 | 远宝宝的blog </title>
+  <title> gstreamer学习笔记1 | 远宝宝的blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -287,7 +285,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/27/远宝宝开始写博客了/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/12/gstreamer学习笔记1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="远宝宝">
@@ -308,7 +306,7 @@
             
             
               
-                远宝宝开始写博客了
+                gstreamer学习笔记1
               
             
           </h1>
@@ -323,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-27T20:11:20+08:00">
-                2017-02-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T17:21:30+08:00">
+                2017-03-12
               </time>
             
 
@@ -346,8 +344,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/diary/" itemprop="url" rel="index">
-                    <span itemprop="name">diary</span>
+                  <a href="/categories/study/" itemprop="url" rel="index">
+                    <span itemprop="name">study</span>
                   </a>
                 </span>
 
@@ -364,8 +362,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/27/远宝宝开始写博客了/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/远宝宝开始写博客了/" itemprop="commentCount"></span>
+                <a href="/2017/03/12/gstreamer学习笔记1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/12/gstreamer学习笔记1/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,7 +371,7 @@
 
           
           
-             <span id="/2017/02/27/远宝宝开始写博客了/" class="leancloud_visitors" data-flag-title="远宝宝开始写博客了">
+             <span id="/2017/03/12/gstreamer学习笔记1/" class="leancloud_visitors" data-flag-title="gstreamer学习笔记1">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,9 +400,48 @@
       
 
       
-        <h2 id="我是远宝宝"><a href="#我是远宝宝" class="headerlink" title="我是远宝宝"></a>我是远宝宝</h2><p>大家好，我是远宝宝，初来乍到，请多关照！</p>
-<p><img src="/image/cat.jpg" alt="&quot;您太美无法查看&quot;"></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">  &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"great thank to laohe!\n"</span>);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+        <p>最近一直在做gstreamer相关的项目，遇到了也解决了一些问题，今天就在这里做一个分享。</p>
+<h4 id="一、基本知识"><a href="#一、基本知识" class="headerlink" title="一、基本知识"></a>一、基本知识</h4><p>主要参考是官网的document，网址是：<a href="https://gstreamer.freedesktop.org/documentation/index.html" target="_blank" rel="external">https://gstreamer.freedesktop.org/documentation/index.html</a></p>
+<p>gstreamer是一个常用的用C语言编写的多媒体框架。更基本的安装什么的在这里不多说。就说一下gstreamer常见的两种应用形式吧。</p>
+<p>1.插件（plugin）</p>
+<p>官网上有插件清单，网址是：<a href="https://gstreamer.freedesktop.org/documentation/plugins.html" target="_blank" rel="external">https://gstreamer.freedesktop.org/documentation/plugins.html</a></p>
+<p>也可以使用gst-inspect-1.0直接查看，如果使用gst-inspect-1.0+插件名称，则可以查看各插件的基本信息。使用各插件的时候需要用！隔开。</p>
+<p>例如：</p>
+<p>gst-launch-1.0  videotestsrc ! imxv4l2sink ，可以显示虚拟源的图像。</p>
+<p>没心思写下去了，直接上干货。</p>
+<p>视频录制：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch-1.0 imxv4l2src device=/dev/video1  num-buffers=300 ! 'video/x-raw,format=(string)NV12,width=1920,height=1080,framerate=(fraction)30/1' ! queue ! vpuenc_h264 ! avimux ! filesink location=filename.avi</div></pre></td></tr></table></figure>
+<p>就是从camera获得数据之后，进行vpuenc编码，avimux就好像一个容器，将编码好的数据放进去，当然有多种不同的编码器和“容器”格式。</p>
+<p>从camera中获得视频并显示：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gst-launch-1.0 imxv4l2srcdevice=/dev/video1 !'video/x-raw,format \</div><div class="line">  (string)UYVY,width=1920,height=1080,framerate=(fraction)30/1' ! imxv4l2sink</div></pre></td></tr></table></figure>
+<p>将二者合起来，同时从camera中获得视频显示并保存(代码中是虚拟源)</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gst-launch-1.0 videotestsrc ! 'video/x-raw,format=(string)NV12,\</div><div class="line">width=1920,height=1080,framerate=(fraction)30/1' ! tee name=yuanbaby !  queue ! imxv4l2sink yuanbaby.  ! queue ! vpuenc ! avimux ! filesink location=filename.avi</div></pre></td></tr></table></figure>
+<p>这里涉及tee的用法，有时间我会详细介绍。</p>
+<p>图片保存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> imxv4l2src device=/dev/video1 ! <span class="built_in">queue</span> ! vpuenc_mjpeg ! filesink location=filename.jpg</div></pre></td></tr></table></figure>
+<p>视频播放（软解，适用于所有格式）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> playbin uri=file:/path/filename.avi</div></pre></td></tr></table></figure>
+<p>视频播放（硬解，以avi为例，不同格式文件对应不同的解码器）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> filesrc location=filename.avi ! avidemux ! vpudec ! imxv4l2sink</div></pre></td></tr></table></figure>
+<p>视频软解就和视频保存完全是逆过程，先从“容器”中拿出来，即demux过程，再解码vpudec，最后播放。</p>
+<p>图片预览（软解）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> filesrc location=filename.jpg ! jpegdec ! imagefreeze ! imxv4l2sink</div></pre></td></tr></table></figure>
+<p>imagefreeze可以固定显示的图像。</p>
+<p>图片预览（硬解）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span>  filesrc location=/wy_target/image_0.jpg blocksize=<span class="number">2073600</span> !  <span class="string">"image/jpeg"</span> ! vpudec ! imagefreeze ! imxv4l2sink</div></pre></td></tr></table></figure>
+<p>这串代码，所有的部分都不能省略，原因我也不知道。</p>
+<p>多张图片同屏显示（这个与内存有关，我所采用的平台最多只能显示五张）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> imxcompositor_ipu name=comp sink_0::width=<span class="number">960</span> sink_0::height=<span class="number">540</span> \</div><div class="line">sink_1::xpos=<span class="number">960</span> sink_1::ypos=<span class="number">0</span> sink_1::width=<span class="number">960</span> sink_1::height=<span class="number">540</span> \</div><div class="line">sink_2::xpos=<span class="number">0</span> sink_2::ypos=<span class="number">540</span> sink_2::width=<span class="number">960</span> sink_2::height=<span class="number">540</span> \</div><div class="line">sink_3::xpos=<span class="number">960</span> sink_3::ypos=<span class="number">540</span> sink_3::width=<span class="number">960</span> sink_3::height=<span class="number">540</span> ! overlaysink \</div><div class="line">filesrc location=/wy_target/image_0.jpg ! jpegdec ! imagefreeze ! comp.sink_0 \</div><div class="line">filesrc location=/wy_target/image_0.jpg ! jpegdec ! imagefreeze ! comp.sink_1 \</div><div class="line">filesrc location=/wy_target/image_0.jpg ! jpegdec ! imagefreeze ! comp.sink_2 \</div><div class="line">filesrc location=/wy_target/image_0.jpg ! jpegdec ! imagefreeze ! comp.sink_3</div></pre></td></tr></table></figure>
+<p>这里用到了imxcompositor_ipu，它还有同系列的imxconvert_ipu等几个插件，有机会再聊。</p>
+<p>多个视频的同屏显示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">gst-launch<span class="number">-1.0</span> \</div><div class="line">playbin uri=file:/wy_target/wy_test.avi video-sink=<span class="string">"overlaysink overlay-width=512 overlay-height=384"</span> \</div><div class="line">playbin uri=file:/wy_target/wy_test.avi flags=<span class="number">0x41</span> video-sink=<span class="string">"overlaysink overlay-left=512 overlay-width=512 overlay-height=384"</span> \ </div><div class="line">playbin uri=file:/wy_target/wy_test.avi  flags=<span class="number">0x41</span> video-sink=<span class="string">"overlaysink overlay-top=384 overlay-width=512 overlay-height=384"</span> \ </div><div class="line">playbin uri=file:/wy_target/wy_test.avi  flags=<span class="number">0x41</span> video-sink=<span class="string">"overlaysink overlay-left=512 overlay-top=384 overlay-width=512 overlay-height=384"</span> \ </div><div class="line">playbin uri=file:/wy_target/wy_test.avi  flags=<span class="number">0x41</span> video-sink=<span class="string">"overlaysink overlay-left=352 overlay-top=264 overlay-width=320 overlay-height=240 zorder=1"</span></div></pre></td></tr></table></figure>
+<p>当然还有videobox，videomix等重要的用法，都是我在考虑如何同屏显示多张图片时想的，记一下，有机会再聊。</p>
+<p>2.程序实现（program）</p>
+<p>其实，对于gstreamer来说，单纯利用插件能实现的功能毕竟是少数，大多数情况才还是需要进行编程实现。有时间我会把自己所思所想、遇到的问题及解决方法记录下来。</p>
+<p>提供几个有用的网址：</p>
+<p>官网：<a href="https://gstreamer.freedesktop.org/documentation/tutorials/index.html" target="_blank" rel="external">https://gstreamer.freedesktop.org/documentation/tutorials/index.html</a>      即tutorial一节。</p>
+<p>中文版本，某博主翻译的：<a href="http://blog.csdn.net/sakulafly/article/list" target="_blank" rel="external">http://blog.csdn.net/sakulafly/article/list</a> </p>
+<p>下次见！</p>
 
       
     </div>
@@ -428,9 +465,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hot/" rel="tag"># hot</a>
-          
-            <a href="/tags/cute/" rel="tag"># cute</a>
+            <a href="/tags/gstreamer/" rel="tag"># gstreamer</a>
           
         </div>
       
@@ -443,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/24/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/02/27/远宝宝开始写博客了/" rel="next" title="远宝宝开始写博客了">
+                <i class="fa fa-chevron-left"></i> 远宝宝开始写博客了
               </a>
             
           </div>
@@ -452,10 +487,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/12/gstreamer学习笔记1/" rel="prev" title="gstreamer学习笔记1">
-                gstreamer学习笔记1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -481,8 +512,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/27/远宝宝开始写博客了/"
-           data-title="远宝宝开始写博客了" data-url="http://yoursite.com/2017/02/27/远宝宝开始写博客了/">
+      <div class="ds-thread" data-thread-key="2017/03/12/gstreamer学习笔记1/"
+           data-title="gstreamer学习笔记1" data-url="http://yoursite.com/2017/03/12/gstreamer学习笔记1/">
       </div>
     
   </div>
@@ -584,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#我是远宝宝"><span class="nav-number">1.</span> <span class="nav-text">我是远宝宝</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、基本知识"><span class="nav-number">1.</span> <span class="nav-text">一、基本知识</span></a></li></ol></div>
             
 
           </div>
