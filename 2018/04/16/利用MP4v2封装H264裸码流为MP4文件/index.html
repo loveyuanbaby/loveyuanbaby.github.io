@@ -1,0 +1,897 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mp4v2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="一、 MP4v2的交叉编译编译环境：海思Hi3516A开发板，SONY的imx178图像传感器sensor
+①下载源码：Google搜索MP4v2，第一个网址https://github.com/TechSmith/mp4v2 ，下载至海思平台并解压，编写脚本文件LinuxBuildReleaseLibs.sh，执行编译。目的是编译出动态库（*.so），编译脚本为：
+123456rm -f bui">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用MP4v2封装H264裸码流为MP4文件">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/index.html">
+<meta property="og:site_name" content="远宝宝的blog">
+<meta property="og:description" content="一、 MP4v2的交叉编译编译环境：海思Hi3516A开发板，SONY的imx178图像传感器sensor
+①下载源码：Google搜索MP4v2，第一个网址https://github.com/TechSmith/mp4v2 ，下载至海思平台并解压，编写脚本文件LinuxBuildReleaseLibs.sh，执行编译。目的是编译出动态库（*.so），编译脚本为：
+123456rm -f bui">
+<meta property="og:image" content="http://yoursite.com/image/avcc.png">
+<meta property="og:updated_time" content="2018-04-19T07:24:01.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用MP4v2封装H264裸码流为MP4文件">
+<meta name="twitter:description" content="一、 MP4v2的交叉编译编译环境：海思Hi3516A开发板，SONY的imx178图像传感器sensor
+①下载源码：Google搜索MP4v2，第一个网址https://github.com/TechSmith/mp4v2 ，下载至海思平台并解压，编写脚本文件LinuxBuildReleaseLibs.sh，执行编译。目的是编译出动态库（*.so），编译脚本为：
+123456rm -f bui">
+<meta name="twitter:image" content="http://yoursite.com/image/avcc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/"/>
+
+
+
+
+
+  <title> 利用MP4v2封装H264裸码流为MP4文件 | 远宝宝的blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">远宝宝的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="远宝宝">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/image/yuanbaby.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="远宝宝的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                利用MP4v2封装H264裸码流为MP4文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:59:47+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index">
+                    <span itemprop="name">study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/04/16/利用MP4v2封装H264裸码流为MP4文件/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/" class="leancloud_visitors" data-flag-title="利用MP4v2封装H264裸码流为MP4文件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、-MP4v2的交叉编译"><a href="#一、-MP4v2的交叉编译" class="headerlink" title="一、 MP4v2的交叉编译"></a>一、 MP4v2的交叉编译</h3><p>编译环境：海思Hi3516A开发板，SONY的imx178图像传感器sensor</p>
+<p>①下载源码：Google搜索MP4v2，第一个网址<a href="https://github.com/TechSmith/mp4v2" target="_blank" rel="external">https://github.com/TechSmith/mp4v2</a> ，下载至海思平台并解压，编写脚本文件LinuxBuildReleaseLibs.sh，执行编译。目的是编译出动态库（*.so），编译脚本为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">rm -f build</div><div class="line">mkdir build</div><div class="line">cd build</div><div class="line">../configure --host=arm-hisiv300-linux --enable-cross-compile --disable-debug --enable-shared</div><div class="line">make -j8 || exit 1</div><div class="line">make install || exit 1</div></pre></td></tr></table></figure>
+<p>这样就生成了动态库目标libmp4v2.so.2.0.0，以及指向动态库的两个软链接文件，位于/usr/local/lib/中。</p>
+<p>②将动态库*.so和头文件拷贝至目标文件夹中，在c程序中添加MP4v2.h头文件，测试程序的makefile中除了需要连接上MP4v2的动态库还需要链接-lstdc++，因为MP4v2是用c++编写的，提供了c接口，因此需要将c++编译器启用并链接，环境搭建准备就绪。</p>
+<h3 id="二、MP4v2的使用"><a href="#二、MP4v2的使用" class="headerlink" title="二、MP4v2的使用"></a>二、MP4v2的使用</h3><p>比较有参考意义的文档：<br><a href="https://blog.csdn.net/skdkjzz/article/details/40393891" target="_blank" rel="external">https://blog.csdn.net/skdkjzz/article/details/40393891</a> 这是一个完整的demo的代码<br><a href="https://blog.csdn.net/YUAN1125/article/details/51163644" target="_blank" rel="external">https://blog.csdn.net/YUAN1125/article/details/51163644</a> 这是MP4v2各函数接口的具体介绍<br><a href="https://blog.csdn.net/jasonwang1002/article/details/49330573" target="_blank" rel="external">https://blog.csdn.net/jasonwang1002/article/details/49330573</a> 简单版本的使用</p>
+<p>1.<strong>主要程序流程</strong>：</p>
+<p>①创建MP4文件，MP4FileHandlefile = MP4CreateEx(“test.mp4”, 0, 1, 1, 0, 0, 0, 0);</p>
+<p>②设置timescale，MP4SetTimeScale(file,90000);</p>
+<p>③得到H264数据裸流并判断类型（sps，pps，set，I帧，P帧），写入顺序是sps，pps，I帧，P帧，不同类型的写入方式不同。循环写入数据。</p>
+<p>【h264编码出的NALU规律】  </p>
+<p>第一帧 SPS【0 0 0 1 0x67】 PPS【0 0 0 1 0x68】 SEI【0 0 0 1 0x6】 IDR【0 0 0 1 0x65】  </p>
+<p>p帧      P【0 0 0 1 0x61】  </p>
+<p> I帧    SPS【0 0 0 1 0x67】 PPS【0 0 0 1 0x68】 IDR【0 0 0 1 0x65】  </p>
+<p>【mp4v2封装函数MP4WriteSample】  </p>
+<p>此函数接收I/P nalu,该nalu需要用4字节的数据大小头替换原有的起始头，并且数据大小为big-endian格式</p>
+<p>SPS和PPS的写入分别使用MP4AddH264SequenceParameterSet()和MP4AddH264PictureParameterSet()，I、P帧的写入则使用MP4WriteSample()。</p>
+<p>④关闭文件。MP4Close(file,0);</p>
+<p><strong>2.MP4的SPS和PPS的获取</strong></p>
+<p>①SPS和PPS在H264裸码流中。SPS和PPS位于NALU header中，<br>SPS【0 0 0 1 0x67】 PPS【0 0 0 1 0x68】</p>
+<p>② SPS和PPS在封装后的H264中。在MP4文件中，SPS和PPS存在于AVCDecoderConfigurationRecord， 首先要定位avcC。参考资料：<br><a href="https://www.cnblogs.com/skyseraph/archive/2012/04/01/2429384.html" target="_blank" rel="external">https://www.cnblogs.com/skyseraph/archive/2012/04/01/2429384.html</a> </p>
+<p><img src="/image/avcc.png" alt="&quot;您太美无法查看&quot;"></p>
+<p>阴影部分就是avcC的全部数据了。其中： 0x61 0x76 0x63 0x43 就是字符avcC<br>0x01 是configurationVersion<br>0x42 是AVCProfileIndication<br>0x00 是profile_compatibility<br>0x1F是AVCLevelIndication<br>0xFF 是6bit的reserved 和2bit的lengthSizeMinusOne<br>0xE1 是3bit的reserved 和5bit的numOfSequenceParameterSets<br>0x00 0x09是sps的长度为9个字节。<br>故SPS的内容为接下来的9个字节：67 42 00 1f e9 02 c1 2c 80<br>接下来的：01为numOfPictureParameterSets<br>0x00和0x04是pps的长度为4个字节。<br>故PPS的内容为接下来的4个字节：68 ce 06 f2<br><strong>如果使用的是H264的裸码流，应采取第一种提取方式；如果使用的是封装过的H264文件，比如从avi文件中提取出来的H264，应该采取第二种方式。ps第二种方式的封装没有测试过</strong></p>
+<p>贴上我自己写的函数（由于是从大程序中摘出来的，可能会涉及一些不需要的变量，可忽略）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">mp4_h264_get</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> iRet,j;</div><div class="line">	<span class="keyword">void</span>* pCtx = <span class="literal">NULL</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ulSampleTime = <span class="number">0</span>;</div><div class="line">	MP4TrackId video;</div><div class="line">	TOUPTEK_VENC_INFO_ST stVencInfo[<span class="number">6</span>];</div><div class="line">	<span class="keyword">int</span> iExpTime;</div><div class="line">	</div><div class="line">	MP4FileHandle file = MP4CreateEx(<span class="string">"test.mp4"</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (file == MP4_INVALID_FILE_HANDLE)   </div><div class="line">	&#123;  </div><div class="line">		<span class="built_in">printf</span>(<span class="string">"open file fialed.\n"</span>);	 </div><div class="line">		<span class="keyword">return</span>;   </div><div class="line">	&#125;  </div><div class="line">	MP4SetTimeScale(file, <span class="number">90000</span>);  </div><div class="line">    <span class="keyword">int</span> index = <span class="number">-1</span>;</div><div class="line">	<span class="keyword">int</span> iFrameRate = <span class="number">25</span>;</div><div class="line">    <span class="comment">//这里是根据实际情况获得曝光时间得到帧率</span></div><div class="line">	<span class="keyword">if</span>(曝光时间！=<span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		iFrameRate = <span class="number">1000</span>/iExpTime;	</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"iFrameRate = %d\n"</span>,iFrameRate);</div><div class="line">	<span class="keyword">while</span>(g_iMp4Flag == <span class="number">0</span>)  </div><div class="line">	&#123;  </div><div class="line">        <span class="comment">//这里用来获得一帧H264数据,结构体stVencInfo中pucData是数据地址，uilen指数据长度</span></div><div class="line">        iRet= touptek_h265h264_get(&amp;stVencInfo[<span class="number">0</span>],&amp;ulSampleTime, &amp;pCtx);</div><div class="line">		<span class="keyword">if</span>(iRet&lt;= <span class="number">0</span>) <span class="comment">/* no get data */</span></div><div class="line">		&#123;</div><div class="line">			 <span class="built_in">printf</span>(<span class="string">"touptek_h265h264_get fail!\n"</span>);</div><div class="line">			 <span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;iRet;j++)</div><div class="line">		&#123;</div><div class="line">          <span class="comment">//判断一帧数据的类型  </span></div><div class="line">          <span class="keyword">if</span>(*(stVencInfo[j].pucData)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">1</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">2</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">3</span>)==<span class="number">1</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">4</span>)==<span class="number">0x67</span>)</div><div class="line">		    &#123;</div><div class="line">		        index = NALU_SPS;</div><div class="line">		        <span class="built_in">printf</span>(<span class="string">"index = NALU_SPS\n"</span>);</div><div class="line">		    &#125;</div><div class="line">		 </div><div class="line">		    <span class="keyword">if</span>(*(stVencInfo[j].pucData)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">1</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">2</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">3</span>)==<span class="number">1</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">4</span>)==<span class="number">0x68</span>)</div><div class="line">		    &#123;</div><div class="line">		        index = NALU_PPS;</div><div class="line">		        <span class="built_in">printf</span>(<span class="string">"index = NALU_PPS\n"</span>);</div><div class="line">		    &#125;</div><div class="line">		    <span class="keyword">if</span>(*(stVencInfo[j].pucData)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">1</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">2</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">3</span>)==<span class="number">1</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">4</span>)==<span class="number">0x65</span>)</div><div class="line">		    &#123;</div><div class="line">		        index = NALU_I;</div><div class="line">		        <span class="built_in">printf</span>(<span class="string">"index = NALU_I\n"</span>);</div><div class="line">		    &#125;</div><div class="line">		    <span class="keyword">if</span>(*(stVencInfo[j].pucData)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">1</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">2</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">3</span>)==<span class="number">1</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">4</span>)==<span class="number">0x61</span>)</div><div class="line">		    &#123;</div><div class="line">		        index = NALU_P;</div><div class="line">		        <span class="built_in">printf</span>(<span class="string">"index = NALU_P\n"</span>);</div><div class="line">		    &#125;</div><div class="line">		    <span class="keyword">if</span>(*(stVencInfo[j].pucData)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">1</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">2</span>)==<span class="number">0</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">3</span>)==<span class="number">1</span> &amp;&amp; *(stVencInfo[j].pucData+<span class="number">4</span>)==<span class="number">0x6</span>)</div><div class="line">		    &#123;</div><div class="line">		        index = NALU_SET;</div><div class="line">		        <span class="built_in">printf</span>(<span class="string">"index = NALU_SET\n"</span>);</div><div class="line">		    &#125;</div><div class="line">            <span class="comment">//不同类型的帧有不同的写入方式</span></div><div class="line">			<span class="keyword">switch</span>(index)</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">case</span> NALU_SPS:         </div><div class="line">				&#123;</div><div class="line">                    <span class="comment">//printf("************SPS*************\n");</span></div><div class="line">					<span class="keyword">if</span>(video == MP4_INVALID_TRACK_ID)</div><div class="line">				    &#123;</div><div class="line">				        video = MP4AddH264VideoTrack(file, <span class="number">90000</span>, <span class="number">90000</span>/iFrameRate, <span class="number">1920</span>, <span class="number">1080</span>,   </div><div class="line">																<span class="number">0x4d</span>, <span class="comment">//sps[1] AVCProfileIndication   </span></div><div class="line">																<span class="number">0x00</span>, <span class="comment">//sps[2] profile_compat	</span></div><div class="line">																<span class="number">0x2a</span>, <span class="comment">//sps[3] AVCLevelIndication	 </span></div><div class="line">																<span class="number">3</span>); <span class="comment">// 4 bytes length before each NAL unit   </span></div><div class="line">						<span class="keyword">if</span> (video == MP4_INVALID_TRACK_ID)	 </div><div class="line">						&#123;	</div><div class="line">							<span class="built_in">printf</span>(<span class="string">"add video track failed.\n"</span>);   </div><div class="line">							<span class="keyword">return</span>;   </div><div class="line">						&#125;	</div><div class="line">				        MP4SetVideoProfileLevel(file, <span class="number">0x7F</span>);  </div><div class="line">				    &#125;  </div><div class="line">				    MP4AddH264SequenceParameterSet(file, video, stVencInfo[j].pucData+<span class="number">4</span>, stVencInfo[j].uiLen<span class="number">-4</span>);</div><div class="line">				    <span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">case</span> NALU_PPS:</div><div class="line">				&#123;</div><div class="line">					<span class="comment">//printf("************PPS*************\n");</span></div><div class="line">				    MP4AddH264PictureParameterSet(file, video, stVencInfo[j].pucData+<span class="number">4</span>, stVencInfo[j].uiLen<span class="number">-4</span>);  </div><div class="line">				    <span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">case</span> NALU_SET:</div><div class="line">				&#123;</div><div class="line"></div><div class="line">					<span class="comment">//printf("************SET*************\n");</span></div><div class="line">					MP4AddH264PictureParameterSet(file, video, stVencInfo[j].pucData+<span class="number">4</span>, stVencInfo[j].uiLen<span class="number">-4</span>);  </div><div class="line">				    <span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">case</span> NALU_I: </div><div class="line">			    &#123;</div><div class="line">					<span class="comment">//printf("************I FRAME*************\n");</span></div><div class="line">			        <span class="keyword">unsigned</span> <span class="keyword">char</span>* IFrameData = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)<span class="built_in">malloc</span>((stVencInfo[j].uiLen)* <span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">char</span>));</div><div class="line">			         </div><div class="line">			        IFrameData[<span class="number">0</span>] = ((stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>;  </div><div class="line">			        IFrameData[<span class="number">1</span>] = ((stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0x00ff0000</span>) &gt;&gt; <span class="number">16</span>;  </div><div class="line">			        IFrameData[<span class="number">2</span>] = ((stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0x0000ff00</span>) &gt;&gt; <span class="number">8</span>;  </div><div class="line">			        IFrameData[<span class="number">3</span>] = (stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0x000000ff</span>;  </div><div class="line">			         </div><div class="line">			        <span class="built_in">memcpy</span>(IFrameData+<span class="number">4</span>, stVencInfo[j].pucData+<span class="number">4</span>, stVencInfo[j].uiLen<span class="number">-4</span>);</div><div class="line">			        <span class="keyword">if</span>(!MP4WriteSample(file, video, IFrameData, stVencInfo[j].uiLen, MP4_INVALID_DURATION, <span class="number">0</span>, <span class="number">1</span>))</div><div class="line">			        &#123;  </div><div class="line">                        <span class="built_in">printf</span>(<span class="string">"write I frame error!!!\n"</span>);</div><div class="line">						<span class="keyword">return</span> <span class="number">-1</span>;  </div><div class="line">			        &#125;  </div><div class="line">			         </div><div class="line">			        <span class="built_in">free</span>(IFrameData); </div><div class="line">			        IFrameData = <span class="literal">NULL</span>;</div><div class="line">			        <span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">case</span> NALU_P:</div><div class="line">			    &#123;</div><div class="line">                    <span class="comment">//printf("************P FRAME*************\n");</span></div><div class="line">					*(stVencInfo[j].pucData) = ((stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0xff000000</span>) &gt;&gt; <span class="number">24</span>;  </div><div class="line">			        *(stVencInfo[j].pucData+<span class="number">1</span>) = ((stVencInfo[j].uiLen<span class="number">-4</span>)  &amp; <span class="number">0x00ff0000</span>) &gt;&gt; <span class="number">16</span>;  </div><div class="line">			        *(stVencInfo[j].pucData+<span class="number">2</span>) = ((stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0x0000ff00</span>) &gt;&gt; <span class="number">8</span>;  </div><div class="line">			        *(stVencInfo[j].pucData+<span class="number">3</span>) = (stVencInfo[j].uiLen<span class="number">-4</span>) &amp; <span class="number">0x000000ff</span>; </div><div class="line">			         </div><div class="line">			        <span class="keyword">if</span>(!MP4WriteSample(file, video, stVencInfo[j].pucData, stVencInfo[j].uiLen, MP4_INVALID_DURATION, <span class="number">0</span>, <span class="number">1</span>))</div><div class="line">			        &#123;  </div><div class="line">                        <span class="built_in">printf</span>(<span class="string">"write P frame error!!!\n"</span>);</div><div class="line">						<span class="keyword">return</span> <span class="number">-1</span>;  </div><div class="line">			        &#125;</div><div class="line">			        <span class="keyword">break</span>;</div><div class="line">			    &#125;</div><div class="line">				<span class="keyword">default</span>:</div><div class="line">				    <span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		touptek_h265h264_free(pCtx);</div><div class="line">	&#125;</div><div class="line">	MP4Close(file, <span class="number">0</span>); </div><div class="line">	g_iMp4EndFlag = <span class="number">1</span>;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;  	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mp4v2/" rel="tag"># mp4v2</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/gstreamer学习笔记1/" rel="next" title="gstreamer学习笔记1">
+                <i class="fa fa-chevron-left"></i> gstreamer学习笔记1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/18/写在春招实习结束时/" rel="prev" title="写在春招实习面试结束时">
+                写在春招实习面试结束时 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/04/16/利用MP4v2封装H264裸码流为MP4文件/"
+           data-title="利用MP4v2封装H264裸码流为MP4文件" data-url="http://yoursite.com/2018/04/16/利用MP4v2封装H264裸码流为MP4文件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/image/yuanbaby.jpg"
+               alt="远宝宝" />
+          <p class="site-author-name" itemprop="name">远宝宝</p>
+           
+              <p class="site-description motion-element" itemprop="description">当今之世，舍我其谁也！</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、-MP4v2的交叉编译"><span class="nav-number">1.</span> <span class="nav-text">一、 MP4v2的交叉编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、MP4v2的使用"><span class="nav-number">2.</span> <span class="nav-text">二、MP4v2的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">远宝宝</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"loveyuanbaby"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("u4CzXl7kkYbWr33sqGARkPys-gzGzoHsz", "HcWKo7bJuefUQwjVn0l5tqJW");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
